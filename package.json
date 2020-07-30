@@ -1,0 +1,46 @@
+{
+  "name": "tree-iteration",
+  "version": "0.1.0",
+  "description": "Tree structure (rose branches) with Zipper iteration",
+  "keywords": [
+    "tree",
+    "node",
+    "zipper"
+  ],
+  "author": "Marco van Kampen <m.kampen@hotmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "dist": "dist",
+    "tests": "tests"
+  },
+  "scripts": {
+    "lint": "eslint -c .eslintrc.js --ext .ts src",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvkampen/tree-iteration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mvkampen/tree-iteration/issues"
+  },
+  "homepage": "https://github.com/mvkampen/tree-iteration#readme",
+  "private": "true",
+  "devDependencies": {
+    "@types/jest": "^26.0.7",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "jest-cli": "^26.1.0",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+  }
+}
