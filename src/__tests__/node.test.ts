@@ -1,5 +1,16 @@
 import * as Node from '../node'
 
+const tree = Node.node(1, [
+  Node.node(2, [ Node.singleton(3), Node.singleton(4) ]),
+  Node.singleton(5),
+  Node.node(6, [
+    Node.node(7, [
+      Node.singleton(8),
+      Node.node(9, [ Node.singleton(10) ])
+    ])
+  ])
+])
+
 describe('singleton', () => {
   let object =  { x: 5 }
   const subject = Node.singleton(object)
@@ -111,5 +122,25 @@ describe( 'replaceValue', () => {
     expect(replaced).not.toEqual(node)
     expect(replaced.value).toEqual(4)
     expect(replaced.children).toEqual(node.children)
+  })
+})
+
+describe('foldl', () => {
+  it('resolve equation using a function pairing from the left', () => {
+    expect(Node.foldl((v, acc) => [...acc, v], [0], tree)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    expect(Node.foldl((v, acc) => v * acc, 1, tree)).toEqual(3628800)
+  })
+})
+
+describe('foldr', () => {
+  it('resolve equation using a function pairing from the right', () => {
+    expect(Node.foldr((v, acc) => [...acc, v], [0], tree)).toEqual([0, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1])
+    expect(Node.foldr((v, acc) => v * acc, 1, tree)).toEqual(3628800)
+  })
+})
+
+describe('count', () => {
+  it('sums up node count of tree', () => {
+    expect(Node.count(tree)).toEqual(10)
   })
 })
