@@ -117,7 +117,7 @@ function lastDecendantOfPreviousSibling<T> (zipper: Zipper<T>): Zipper<T> | unde
 function goPrevious<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   return firstOf([lastDecendantOfPreviousSibling, goUp], zipper)
 }
- 
+
 function firstOf<T> (
   functions: Array<(zipper: Zipper<T>) => Zipper<T> | undefined>,
   zipper: Zipper<T>
@@ -213,7 +213,8 @@ function append<T> (
 
 export {
   root, value, tree, zipper,
-  goUp, goLeft, goRight, goNext,
+  goUp, goLeft, goRight, goNext, goPrevious,
+  goToNextSiblingOfAncestor, goToLastDecendant,
   goToChild, goToFirstChild, goToLastChild,
   update, replace, prepend, append,
   findNext, findPrevious, Zipper
