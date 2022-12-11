@@ -1,6 +1,6 @@
 {
   "name": "tree-iteration",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Tree structure (rose branches) with Zipper iteration",
   "keywords": [
     "tree",
@@ -39,8 +39,7 @@
     "jest": "^26.1.0",
     "jest-cli": "^26.1.0",
     "ts-jest": "^26.1.4",
-    "typescript": "^3.9.6"
+    "typescript": "^4.9.4"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

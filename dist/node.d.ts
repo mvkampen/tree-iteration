@@ -1,4 +1,4 @@
-declare type Node<T> = {
+type Node<T> = {
     readonly value: T;
     readonly children: Array<Node<T>>;
 };

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPrevious = exports.findNext = exports.append = exports.prepend = exports.replace = exports.update = exports.goToLastChild = exports.goToFirstChild = exports.goToChild = exports.goNext = exports.goRight = exports.goLeft = exports.goUp = exports.zipper = exports.tree = exports.value = exports.root = void 0;
+exports.findPrevious = exports.findNext = exports.append = exports.prepend = exports.replace = exports.update = exports.goToLastChild = exports.goToFirstChild = exports.goToChild = exports.goToLastDecendant = exports.goToNextSiblingOfAncestor = exports.goPrevious = exports.goNext = exports.goRight = exports.goLeft = exports.goUp = exports.zipper = exports.tree = exports.value = exports.root = void 0;
 const node_1 = require("./node");
 function zipper(node) {
     return { node: node, path: [] };
 }
 exports.zipper = zipper;
 function update(fn, { node, path }) {
-    return { node: node_1.mapValue(fn, node), path };
+    return { node: (0, node_1.mapValue)(fn, node), path };
 }
 exports.update = update;
 function replace(value, zipper) {
@@ -96,6 +96,7 @@ function goToNextSiblingOfAncestor(zipper) {
     else
         return undefined;
 }
+exports.goToNextSiblingOfAncestor = goToNextSiblingOfAncestor;
 function goToLastDecendant(zipper) {
     const child = goToLastChild(zipper);
     if (child)
@@ -103,6 +104,7 @@ function goToLastDecendant(zipper) {
     else
         return zipper;
 }
+exports.goToLastDecendant = goToLastDecendant;
 function goNext(zipper) {
     return firstOf([goToFirstChild, goRight, goToNextSiblingOfAncestor], zipper);
 }
@@ -117,6 +119,7 @@ function lastDecendantOfPreviousSibling(zipper) {
 function goPrevious(zipper) {
     return firstOf([lastDecendantOfPreviousSibling, goUp], zipper);
 }
+exports.goPrevious = goPrevious;
 function firstOf(functions, zipper) {
     const [fn, ...rest] = functions;
     if (fn) {

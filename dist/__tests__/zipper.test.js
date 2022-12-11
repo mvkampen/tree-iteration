@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_1 = require("../node");
 const Zipper = require("../zipper");
-const tree = node_1.node(1, [
-    node_1.node(2, [node_1.singleton(3), node_1.singleton(4)]),
-    node_1.singleton(5),
-    node_1.node(6, [
-        node_1.node(7, [
-            node_1.singleton(8),
-            node_1.node(9, [node_1.singleton(10)])
+const tree = (0, node_1.node)(1, [
+    (0, node_1.node)(2, [(0, node_1.singleton)(3), (0, node_1.singleton)(4)]),
+    (0, node_1.singleton)(5),
+    (0, node_1.node)(6, [
+        (0, node_1.node)(7, [
+            (0, node_1.singleton)(8),
+            (0, node_1.node)(9, [(0, node_1.singleton)(10)])
         ])
     ])
 ]);
@@ -137,7 +137,7 @@ describe('prepend', () => {
     it('prepend to current focus node', () => {
         const child = Zipper.goToFirstChild(zip);
         if (child) {
-            const added = Zipper.prepend(node_1.singleton(12), child);
+            const added = Zipper.prepend((0, node_1.singleton)(12), child);
             if (added) {
                 expect(Zipper.value(added)).toEqual(2);
                 const left = Zipper.goLeft(added);
@@ -157,7 +157,7 @@ describe('append', () => {
     it('append to current focus node', () => {
         const child = Zipper.goToLastChild(zip);
         if (child) {
-            const added = Zipper.prepend(node_1.singleton(12), child);
+            const added = Zipper.prepend((0, node_1.singleton)(12), child);
             if (added) {
                 expect(Zipper.value(added)).toEqual(6);
                 const right = Zipper.goRight(added);
