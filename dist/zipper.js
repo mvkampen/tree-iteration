@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPrevious = exports.findNext = exports.append = exports.prepend = exports.replace = exports.update = exports.goToLastChild = exports.goToFirstChild = exports.goToChild = exports.goToLastDecendant = exports.goToNextSiblingOfAncestor = exports.goPrevious = exports.goNext = exports.goRight = exports.goLeft = exports.goUp = exports.zipper = exports.tree = exports.value = exports.root = void 0;
+exports.remove = exports.append = exports.prepend = exports.findPrevious = exports.findNext = exports.find = exports.root = exports.goPrevious = exports.goNext = exports.goToLastDecendant = exports.goToLastChild = exports.goToFirstChild = exports.goToChild = exports.goRight = exports.goLeft = exports.goUp = exports.value = exports.tree = exports.replace = exports.update = exports.zipper = void 0;
 const node_1 = require("./node");
 function zipper(node) {
     return { node: node, path: [] };
@@ -81,7 +81,7 @@ function goToFirstChild(zipper) {
 }
 exports.goToFirstChild = goToFirstChild;
 function goToLastChild({ node, path }) {
-    return goToChild(node.children.length, { node, path });
+    return goToChild(node.children.length - 1, { node, path });
 }
 exports.goToLastChild = goToLastChild;
 function goToNextSiblingOfAncestor(zipper) {
@@ -96,7 +96,6 @@ function goToNextSiblingOfAncestor(zipper) {
     else
         return undefined;
 }
-exports.goToNextSiblingOfAncestor = goToNextSiblingOfAncestor;
 function goToLastDecendant(zipper) {
     const child = goToLastChild(zipper);
     if (child)
@@ -161,6 +160,7 @@ function find(predicate, move, zipper) {
     else
         return undefined;
 }
+exports.find = find;
 function findNext(predicate, zipper) {
     return find(predicate, goNext, zipper);
 }
@@ -190,8 +190,29 @@ function append(append, { node, path }) {
     }
     else
         newContext = { focus: node.value, left: [], right: [append] };
-    path.push(context);
     return { node, path: [newContext, ...trail] };
 }
 exports.append = append;
+function remove({ node, path }) {
+    const [context, ...trail] = path;
+    if (context) {
+        const { left, right } = context;
+        if (right.length) {
+            const [newFocus, ...newRight] = right;
+            const newContext = { focus: newFocus.value, left, right: newRight };
+            return { node: newFocus, path: [newContext, ...trail] };
+        }
+        else if (left.length) {
+            const newFocus = left[left.length - 1];
+            const newLeft = left.slice(0, -1);
+            const newContext = { focus: newFocus.value, left: newLeft, right };
+            return { node: newFocus, path: [newContext, ...trail] };
+        }
+        else {
+            return { node: (0, node_1.singleton)(trail[0].focus), path: trail };
+        }
+    }
+    return undefined;
+}
+exports.remove = remove;
 //# sourceMappingURL=zipper.js.map

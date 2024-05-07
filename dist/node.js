@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.count = exports.foldr = exports.foldl = exports.replaceValue = exports.mapValue = exports.prependChild = exports.appendChild = exports.hasChildren = exports.isLeaf = exports.node = exports.singleton = void 0;
+exports.count = exports.foldStep = exports.foldl = exports.foldr = exports.replaceValue = exports.mapValue = exports.prependChild = exports.appendChild = exports.hasChildren = exports.isLeaf = exports.node = exports.singleton = void 0;
 function singleton(value) {
     return { value, children: [] };
 }
@@ -58,6 +58,7 @@ function foldStep(fn, acc, nodes, sets) {
     else
         return acc;
 }
+exports.foldStep = foldStep;
 function count(tree) {
     return foldl((_value, sum) => sum + 1, 0, tree);
 }
