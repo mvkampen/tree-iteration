@@ -1,37 +1,37 @@
-import { Node, mapValue } from './node'
+import { type Node, mapValue } from './node'
 
-type Context<T> = {
+export type Context<T> = {
   readonly focus: T,
   readonly left: Array<Node<T>>,
   readonly right: Array<Node<T>>
 }
 
-type Zipper<T> = {
+export type Zipper<T> = {
   readonly node: Node<T>
   readonly path: Array<Context<T>>
 }
 
-function zipper<T> (node: Node<T>): Zipper<T> {
+export function zipper<T> (node: Node<T>): Zipper<T> {
   return { node: node, path: [] }
 }
 
-function update<T> (fn: (value: T) => T, { node, path }: Zipper<T>): Zipper<T> {
+export function update<T> (fn: (value: T) => T, { node, path }: Zipper<T>): Zipper<T> {
   return { node: mapValue(fn, node), path }
 }
 
-function replace<T> (value: T, zipper : Zipper<T>) : Zipper<T> {
+export function replace<T> (value: T, zipper : Zipper<T>) : Zipper<T> {
   return update(() => value, zipper)
 }
 
-function tree<T> ({ node }: Zipper<T>) : Node<T> {
+export function tree<T> ({ node }: Zipper<T>) : Node<T> {
   return node
 }
 
-function value<T> ({ node }: Zipper<T>): T {
+export function value<T> ({ node }: Zipper<T>): T {
   return node.value
 }
 
-function goUp<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
+export function goUp<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   const [context, ...trail] = path
 
   if (context) {
@@ -43,7 +43,7 @@ function goUp<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   }
 }
 
-function goLeft<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
+export function goLeft<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   const [context, ...trail] = path
 
   if (context) {
@@ -57,7 +57,7 @@ function goLeft<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   } else return undefined
 }
 
-function goRight<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
+export function goRight<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   const [context, ...trail] = path
 
   if (context) {
@@ -71,7 +71,7 @@ function goRight<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   } else return undefined
 }
 
-function goToChild<T> (n: number, { node , path }: Zipper<T>): Zipper<T> | undefined {
+export function goToChild<T> (n: number, { node , path }: Zipper<T>): Zipper<T> | undefined {
   const { focus, left, right } = indexSplit(n, node.children)
 
   if (focus) {
@@ -80,11 +80,11 @@ function goToChild<T> (n: number, { node , path }: Zipper<T>): Zipper<T> | undef
   } else return undefined
 }
 
-function goToFirstChild<T> (zipper: Zipper<T>): Zipper<T> | undefined {
+export function goToFirstChild<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   return goToChild(0, zipper)
 }
 
-function goToLastChild<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
+export function goToLastChild<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
   return goToChild(node.children.length, { node, path })
 }
 
@@ -98,13 +98,13 @@ function goToNextSiblingOfAncestor<T> (zipper: Zipper<T>): Zipper<T> | undefined
   else return undefined
 }
 
-function goToLastDecendant<T> (zipper: Zipper<T>): Zipper<T> {
+export function goToLastDecendant<T> (zipper: Zipper<T>): Zipper<T> {
   const child = goToLastChild(zipper)
   if (child) return goToLastDecendant(child)
   else return zipper
 }
 
-function goNext<T> (zipper: Zipper<T>): Zipper<T> | undefined {
+export function goNext<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   return firstOf([goToFirstChild, goRight, goToNextSiblingOfAncestor], zipper)
 }
 
@@ -114,7 +114,7 @@ function lastDecendantOfPreviousSibling<T> (zipper: Zipper<T>): Zipper<T> | unde
   else return undefined
 }
 
-function goPrevious<T> (zipper: Zipper<T>): Zipper<T> | undefined {
+export function goPrevious<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   return firstOf([lastDecendantOfPreviousSibling, goUp], zipper)
 }
 
@@ -146,7 +146,7 @@ function indexSplit<T> (
   return { focus, left, right }
 }
 
-function root<T> (zipper: Zipper<T>): Zipper<T> | undefined {
+export function root<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   if (zipper.path.length > 0) {
     const up = goUp(zipper)
     if (up) return root(up)
@@ -154,7 +154,7 @@ function root<T> (zipper: Zipper<T>): Zipper<T> | undefined {
   } else return zipper
 }
 
-function find<T> (
+export function find<T> (
   predicate: (p: T) => boolean,
   move: (zipper: Zipper<T>) => Zipper<T> | undefined,
   zipper: Zipper<T>
@@ -166,21 +166,21 @@ function find<T> (
   } else return undefined
 }
 
-function findNext<T> (
+export function findNext<T> (
  predicate: (p: T) => boolean,
  zipper: Zipper<T>
 ): Zipper<T> | undefined {
   return find(predicate, goNext, zipper)
 }
 
-function findPrevious<T> (
+export function findPrevious<T> (
   predicate: (p: T) => boolean,
   zipper: Zipper<T>
  ): Zipper<T> | undefined {
    return find(predicate, goPrevious, zipper)
  }
 
-function prepend<T> (
+ export function prepend<T> (
   prepend: Node<T>,
   { node, path }: Zipper<T>
 ): Zipper<T> {
@@ -195,7 +195,7 @@ function prepend<T> (
   return { node, path: [newContext, ...trail] }
 }
 
-function append<T> (
+export function append<T> (
   append: Node<T>,
   { node, path }: Zipper<T>
 ): Zipper<T> {
@@ -207,15 +207,5 @@ function append<T> (
   }
   else newContext = { focus: node.value, left: [], right: [append] }
 
-  path.push(context)
   return { node, path: [newContext, ...trail] }
-}
-
-export {
-  root, value, tree, zipper,
-  goUp, goLeft, goRight, goNext, goPrevious,
-  goToNextSiblingOfAncestor, goToLastDecendant,
-  goToChild, goToFirstChild, goToLastChild,
-  update, replace, prepend, append,
-  findNext, findPrevious, Zipper
 }
