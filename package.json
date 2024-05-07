@@ -17,7 +17,9 @@
   },
   "scripts": {
     "lint": "eslint -c .eslintrc.js --ext .ts src",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   },
   "engines": {
     "node": ">=12.13.0"
