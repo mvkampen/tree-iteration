@@ -12,7 +12,7 @@ const tree = Node.node(1, [
 ])
 
 describe('singleton', () => {
-  let object =  { x: 5 }
+  const object =  { x: 5 }
   const subject = Node.singleton(object)
 
   it ('can hold abstract value', () => {

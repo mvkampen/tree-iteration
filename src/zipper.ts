@@ -210,7 +210,7 @@ export function append<T> (
   return { node, path: [newContext, ...trail] }
 }
 
-export function remove<T> ({ node, path }: Zipper<T>):  Zipper<T> | undefined {
+export function remove<T> ({ path }: Zipper<T>):  Zipper<T> | undefined {
   const [context, ...trail] = path
   if (context) {
     const { left, right } = context
