@@ -12,8 +12,8 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "lib": ["es2017"],
-    "target": "es2017"
+    "lib": ["ES2022"],
+    "target": "es2022"
   },
   "compileOnSave": true
 }
