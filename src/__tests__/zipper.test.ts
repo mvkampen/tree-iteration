@@ -101,7 +101,7 @@ describe('goToLastChild', () => {
 describe('goNext', () => {
   it('traverses breadth first along children, siblings and ancestors', () => {
     let subject: Zipper.Zipper<number> | undefined = zip
-    const walked = []
+    const walked: Array<number> = []
 
     do {
       walked.push(Zipper.value(subject))
