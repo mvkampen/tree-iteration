@@ -173,3 +173,42 @@ describe('findNext', () => {
     } else fail()
   })
 })
+
+describe('goToLastDecendant', () => {
+  it ('walk to furthest right child', () => {
+    const move = Zipper.goToLastDecendant(zip)
+    if (move) {
+      expect(Zipper.value(move)).toEqual(10)
+    }
+    else fail()
+  })
+})
+
+describe('remove', () => {
+  it ('moves focus to right', () => {
+    const move = Zipper.goToFirstChild(zip)
+    if (move) {
+      const removed = Zipper.remove(move)
+      if (removed) expect(Zipper.value(removed)).toEqual(5)
+      else fail()
+    } else fail()
+  })
+
+  it ('moves focus to the left, when right is empty', () => {
+    const move = Zipper.goToLastChild(zip)
+    if (move) {
+      const removed = Zipper.remove(move)
+      if (removed) expect(Zipper.value(removed)).toEqual(5)
+      else fail()
+    } else fail()
+  })
+
+  it ('moves focus back up, without siblings', () => {
+    const move = Zipper.goToLastDecendant(zip)
+    if (move) {
+      const removed = Zipper.remove(move)
+      if (removed) expect(Zipper.value(removed)).toEqual(7)
+      else fail()
+    } else fail()
+  })
+})
