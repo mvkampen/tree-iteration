@@ -1,4 +1,4 @@
-import { type Node, mapValue } from './node'
+import { type Node, mapValue, singleton } from './node'
 
 export type Context<T> = {
   readonly focus: T,
@@ -85,7 +85,7 @@ export function goToFirstChild<T> (zipper: Zipper<T>): Zipper<T> | undefined {
 }
 
 export function goToLastChild<T> ({ node, path }: Zipper<T>): Zipper<T> | undefined {
-  return goToChild(node.children.length, { node, path })
+  return goToChild(node.children.length - 1, { node, path })
 }
 
 function goToNextSiblingOfAncestor<T> (zipper: Zipper<T>): Zipper<T> | undefined {
@@ -94,7 +94,7 @@ function goToNextSiblingOfAncestor<T> (zipper: Zipper<T>): Zipper<T> | undefined
     const sibling = goRight(ancestor)
     if (sibling) return sibling
     else return goToNextSiblingOfAncestor(ancestor)
-  } 
+  }
   else return undefined
 }
 
@@ -189,7 +189,7 @@ export function findPrevious<T> (
   if (context) {
     const { focus, left, right } = context
     newContext = { focus, left: [...left, prepend], right }
-  } 
+  }
   else newContext = { focus: node.value, left: [prepend], right: [] }
 
   return { node, path: [newContext, ...trail] }
@@ -208,4 +208,27 @@ export function append<T> (
   else newContext = { focus: node.value, left: [], right: [append] }
 
   return { node, path: [newContext, ...trail] }
+}
+
+export function remove<T> ({ node, path }: Zipper<T>):  Zipper<T> | undefined {
+  const [context, ...trail] = path
+  if (context) {
+    const { left, right } = context
+    if (right.length) {
+      const [newFocus, ...newRight] = right
+      const newContext = { focus: newFocus.value, left, right: newRight }
+
+      return { node: newFocus, path: [newContext, ...trail] }
+    } else if (left.length) {
+      const newFocus = left[left.length - 1]
+      const newLeft = left.slice(0, -1)
+      const newContext = { focus: newFocus.value, left: newLeft, right }
+
+      return { node: newFocus, path: [newContext, ...trail] }
+    } else {
+      return { node: singleton(trail[0].focus), path: trail }
+    }
+  }
+
+  return undefined
 }

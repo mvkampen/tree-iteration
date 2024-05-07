@@ -14,12 +14,10 @@ const tree = node(1, [
 const zip = Zipper.zipper(tree)
 
 describe('zipper', () => {
-
   it('sets location and path', () => {
     expect(zip.node).toEqual(tree)
     expect(zip.path).toEqual([])
   })
-  
 })
 
 describe('update', () => {
@@ -72,8 +70,8 @@ describe('goRight', () => {
         const end = Zipper.goRight(right)
         expect(end).toBeUndefined
       }
-      else fail
-    } else fail
+      else fail()
+    } else fail()
   })
 })
 
@@ -87,19 +85,16 @@ describe('goLeft', () => {
         const end = Zipper.goLeft(left)
         expect(end).toBeUndefined
       }
-      else fail
-    } else fail
+      else fail()
+    } else fail()
   })
 })
 
 describe('goToLastChild', () => {
   it('move focus to last child of current node', () => {
-    const move = Zipper.goToFirstChild(zip)
-    if (move) {
-      const last = Zipper.goToLastChild(move)
-      if (last) expect(Zipper.value(last)).toEqual(6)
-      else fail
-    } else fail
+    const move = Zipper.goToLastChild(zip)
+    if (move) expect(Zipper.value(move)).toEqual(6)
+    else fail()
   })
 })
 
@@ -125,9 +120,9 @@ describe('root', () => {
       if (down) {
         const root = Zipper.root(down)
         if (root) expect(Zipper.value(root)).toEqual(1)
-        else fail
-      } else fail
-    } else fail
+        else fail()
+      } else fail()
+    } else fail()
   })
 })
 
@@ -140,11 +135,11 @@ describe('prepend', () => {
         // keeps focus
         expect(Zipper.value(added)).toEqual(2)
         const left = Zipper.goLeft(added)
-        // added left, event if focus was firstChild
+        // added left, even if focus was firstChild
         if (left) expect(Zipper.value(left)).toEqual(12)
-        else fail
-      } else fail
-    } else fail
+        else fail()
+      } else fail()
+    } else fail()
   })
 })
 
@@ -156,12 +151,12 @@ describe('append', () => {
       if (added) {
         // keeps focus
         expect(Zipper.value(added)).toEqual(6)
-        const right = Zipper.goRight(added)
-        // added left, event if focus was firstChild
+        const right = Zipper.goLeft(added)
+        // added right, even if focus was lastChild
         if (right) expect(Zipper.value(right)).toEqual(12)
-        else fail
-      } else fail
-    } else fail
+        else fail()
+      } else fail()
+    } else fail()
   })
 })
 
@@ -174,7 +169,7 @@ describe('findNext', () => {
       const next = Zipper.findNext(even, walked)
       // continues bfs from focus
       if (next) expect(Zipper.value(next)).toEqual(4)
-      else fail
-    } else fail
+      else fail()
+    } else fail()
   })
 })
