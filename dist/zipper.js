@@ -1,28 +1,20 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove = exports.append = exports.prepend = exports.findPrevious = exports.findNext = exports.find = exports.root = exports.goPrevious = exports.goNext = exports.goToLastDecendant = exports.goToLastChild = exports.goToFirstChild = exports.goToChild = exports.goRight = exports.goLeft = exports.goUp = exports.value = exports.tree = exports.replace = exports.update = exports.zipper = void 0;
-const node_1 = require("./node");
-function zipper(node) {
+import { mapValue, singleton } from './node';
+export function zipper(node) {
     return { node: node, path: [] };
 }
-exports.zipper = zipper;
-function update(fn, { node, path }) {
-    return { node: (0, node_1.mapValue)(fn, node), path };
+export function update(fn, { node, path }) {
+    return { node: mapValue(fn, node), path };
 }
-exports.update = update;
-function replace(value, zipper) {
+export function replace(value, zipper) {
     return update(() => value, zipper);
 }
-exports.replace = replace;
-function tree({ node }) {
+export function tree({ node }) {
     return node;
 }
-exports.tree = tree;
-function value({ node }) {
+export function value({ node }) {
     return node.value;
 }
-exports.value = value;
-function goUp({ node, path }) {
+export function goUp({ node, path }) {
     const [context, ...trail] = path;
     if (context) {
         const { focus, left, right } = context;
@@ -33,8 +25,7 @@ function goUp({ node, path }) {
         return undefined;
     }
 }
-exports.goUp = goUp;
-function goLeft({ node, path }) {
+export function goLeft({ node, path }) {
     const [context, ...trail] = path;
     if (context) {
         const { focus, left, right } = context;
@@ -49,8 +40,7 @@ function goLeft({ node, path }) {
     else
         return undefined;
 }
-exports.goLeft = goLeft;
-function goRight({ node, path }) {
+export function goRight({ node, path }) {
     const [context, ...trail] = path;
     if (context) {
         const { focus, left, right } = context;
@@ -65,8 +55,7 @@ function goRight({ node, path }) {
     else
         return undefined;
 }
-exports.goRight = goRight;
-function goToChild(n, { node, path }) {
+export function goToChild(n, { node, path }) {
     const { focus, left, right } = indexSplit(n, node.children);
     if (focus) {
         const context = { focus: node.value, left, right };
@@ -75,15 +64,12 @@ function goToChild(n, { node, path }) {
     else
         return undefined;
 }
-exports.goToChild = goToChild;
-function goToFirstChild(zipper) {
+export function goToFirstChild(zipper) {
     return goToChild(0, zipper);
 }
-exports.goToFirstChild = goToFirstChild;
-function goToLastChild({ node, path }) {
+export function goToLastChild({ node, path }) {
     return goToChild(node.children.length - 1, { node, path });
 }
-exports.goToLastChild = goToLastChild;
 function goToNextSiblingOfAncestor(zipper) {
     const ancestor = goUp(zipper);
     if (ancestor) {
@@ -96,18 +82,16 @@ function goToNextSiblingOfAncestor(zipper) {
     else
         return undefined;
 }
-function goToLastDecendant(zipper) {
+export function goToLastDecendant(zipper) {
     const child = goToLastChild(zipper);
     if (child)
         return goToLastDecendant(child);
     else
         return zipper;
 }
-exports.goToLastDecendant = goToLastDecendant;
-function goNext(zipper) {
+export function goNext(zipper) {
     return firstOf([goToFirstChild, goRight, goToNextSiblingOfAncestor], zipper);
 }
-exports.goNext = goNext;
 function lastDecendantOfPreviousSibling(zipper) {
     const previous = goLeft(zipper);
     if (previous)
@@ -115,10 +99,9 @@ function lastDecendantOfPreviousSibling(zipper) {
     else
         return undefined;
 }
-function goPrevious(zipper) {
+export function goPrevious(zipper) {
     return firstOf([lastDecendantOfPreviousSibling, goUp], zipper);
 }
-exports.goPrevious = goPrevious;
 function firstOf(functions, zipper) {
     const [fn, ...rest] = functions;
     if (fn) {
@@ -137,7 +120,7 @@ function indexSplit(n, children) {
     const right = children.slice(n + 1);
     return { focus, left, right };
 }
-function root(zipper) {
+export function root(zipper) {
     if (zipper.path.length > 0) {
         const up = goUp(zipper);
         if (up)
@@ -148,8 +131,7 @@ function root(zipper) {
     else
         return zipper;
 }
-exports.root = root;
-function find(predicate, move, zipper) {
+export function find(predicate, move, zipper) {
     const next = move(zipper);
     if (next) {
         if (predicate(value(next)))
@@ -160,16 +142,13 @@ function find(predicate, move, zipper) {
     else
         return undefined;
 }
-exports.find = find;
-function findNext(predicate, zipper) {
+export function findNext(predicate, zipper) {
     return find(predicate, goNext, zipper);
 }
-exports.findNext = findNext;
-function findPrevious(predicate, zipper) {
+export function findPrevious(predicate, zipper) {
     return find(predicate, goPrevious, zipper);
 }
-exports.findPrevious = findPrevious;
-function prepend(prepend, { node, path }) {
+export function prepend(prepend, { node, path }) {
     const [context, ...trail] = path;
     let newContext;
     if (context) {
@@ -180,8 +159,7 @@ function prepend(prepend, { node, path }) {
         newContext = { focus: node.value, left: [prepend], right: [] };
     return { node, path: [newContext, ...trail] };
 }
-exports.prepend = prepend;
-function append(append, { node, path }) {
+export function append(append, { node, path }) {
     const [context, ...trail] = path;
     let newContext;
     if (context) {
@@ -192,8 +170,7 @@ function append(append, { node, path }) {
         newContext = { focus: node.value, left: [], right: [append] };
     return { node, path: [newContext, ...trail] };
 }
-exports.append = append;
-function remove({ node, path }) {
+export function remove({ path }) {
     const [context, ...trail] = path;
     if (context) {
         const { left, right } = context;
@@ -209,10 +186,9 @@ function remove({ node, path }) {
             return { node: newFocus, path: [newContext, ...trail] };
         }
         else {
-            return { node: (0, node_1.singleton)(trail[0].focus), path: trail };
+            return { node: singleton(trail[0].focus), path: trail };
         }
     }
     return undefined;
 }
-exports.remove = remove;
 //# sourceMappingURL=zipper.js.map

@@ -28,4 +28,4 @@ export declare function findNext<T>(predicate: (p: T) => boolean, zipper: Zipper
 export declare function findPrevious<T>(predicate: (p: T) => boolean, zipper: Zipper<T>): Zipper<T> | undefined;
 export declare function prepend<T>(prepend: Node<T>, { node, path }: Zipper<T>): Zipper<T>;
 export declare function append<T>(append: Node<T>, { node, path }: Zipper<T>): Zipper<T>;
-export declare function remove<T>({ node, path }: Zipper<T>): Zipper<T> | undefined;
+export declare function remove<T>({ path }: Zipper<T>): Zipper<T> | undefined;

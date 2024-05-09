@@ -1,6 +1,6 @@
 {
   "name": "tree-iteration",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tree structure with Zipper iteration",
   "type": "module",
   "keywords": [
@@ -16,11 +16,21 @@
     "dist": "dist",
     "tests": "tests"
   },
+  "exports": {
+    "./zipper": {
+      "default": "./dist/zipper.js",
+      "types": "./dist/zipper.d.ts"
+    },
+    "./node": {
+      "default": "./dist/node.js",
+      "types": "./dist/node.d.ts"
+    }
+  },
   "scripts": {
     "lint": "eslint",
     "test": "jest",
     "build": "tsc --build",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean && rm ./dist/*.d.ts"
   },
   "engines": {
     "node": ">=12.13.0"
