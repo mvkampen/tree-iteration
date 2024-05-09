@@ -1,4 +1,4 @@
-import { type Node, mapValue, singleton } from './node.js'
+import { type Node, mapValue, singleton } from './node'
 
 export type Context<T> = {
   readonly focus: T,

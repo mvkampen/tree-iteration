@@ -1,5 +1,6 @@
 import { node, singleton } from '../node'
 import * as Zipper from '../zipper'
+import { type Zipper as Zip } from '../zipper'
 
 const tree = node(1, [
   node(2, [ singleton(3), singleton(4) ]),
@@ -100,7 +101,7 @@ describe('goToLastChild', () => {
 
 describe('goNext', () => {
   it('traverses breadth first along children, siblings and ancestors', () => {
-    let subject: Zipper.Zipper<number> | undefined = zip
+    let subject: Zip<number> | undefined = zip
     const walked: Array<number> = []
 
     do {

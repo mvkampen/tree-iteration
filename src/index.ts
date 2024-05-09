@@ -1,2 +1,2 @@
-export * from './node.js'
-export * from './zipper.js'
+export * from './node'
+export * from './zipper'
