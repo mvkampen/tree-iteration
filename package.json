@@ -11,19 +11,24 @@
   "author": "Marco van Kampen <m.kampen@hotmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
     "dist": "dist",
     "tests": "tests"
   },
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./zipper": {
-      "default": "./dist/zipper.js",
-      "types": "./dist/zipper.d.ts"
+      "types": "./dist/zipper.d.ts",
+      "default": "./dist/zipper.js"
     },
     "./node": {
-      "default": "./dist/node.js",
-      "types": "./dist/node.d.ts"
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
     }
   },
   "scripts": {

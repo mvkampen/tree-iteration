@@ -1,2 +1,2 @@
-export { type Node } from './node.js'
-export { type Zipper } from './zipper.js'
+export * from './node.js'
+export * from './zipper.js'
