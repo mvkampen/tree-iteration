@@ -2,7 +2,6 @@
   "name": "tree-iteration",
   "version": "0.2.1",
   "description": "Tree structure with Zipper iteration",
-  "type": "module",
   "keywords": [
     "tree",
     "node",
@@ -10,32 +9,38 @@
   ],
   "author": "Marco van Kampen <m.kampen@hotmail.com>",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "index.d.ts",
   "directories": {
     "dist": "dist",
     "tests": "tests"
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
     },
     "./zipper": {
-      "types": "./dist/zipper.d.ts",
-      "default": "./dist/zipper.js"
+      "types": "./dist/types/zipper.d.ts",
+      "import": "./dist/esm/zipper.js",
+      "require": "./dist/cjs/zipper.js",
+      "default": "./dist/esm/index.js"
     },
     "./node": {
-      "types": "./dist/node.d.ts",
-      "default": "./dist/node.js"
+      "types": "./dist/types/node.d.ts",
+      "import": "./dist/esm/node.js",
+      "require": "./dist/cjs/node.js",
+      "default": "./dist/esm/index.js"
     }
   },
   "scripts": {
     "lint": "eslint",
     "test": "jest",
-    "build": "tsc --build",
-    "clean": "tsc --build --clean && rm ./dist/*.d.ts"
+    "build": "tsc -b tsconfig.cjs.json tsconfig.esm.json tsconfig.types.json",
+    "clean": "rm -rf ./dist"
   },
   "engines": {
     "node": ">=12.13.0"
