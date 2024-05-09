@@ -1,4 +1,4 @@
-import { mapValue, singleton } from './node';
+import { mapValue, singleton } from './node.js';
 export function zipper(node) {
     return { node: node, path: [] };
 }
