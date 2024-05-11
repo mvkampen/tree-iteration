@@ -12,7 +12,7 @@
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "index.d.ts",
+  "types": "dist/index.d.ts",
   "directories": {
     "dist": "dist",
     "tests": "tests"
@@ -20,7 +20,7 @@
   "scripts": {
     "lint": "eslint",
     "test": "jest",
-    "build": "npx esbuild --config 'esbuild.config.ts'",
+    "build": "node esbuild.config.js && tsc",
     "clean": "rm -rf ./dist"
   },
   "exports": {
