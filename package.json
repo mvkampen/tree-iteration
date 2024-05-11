@@ -25,14 +25,14 @@
   },
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "require": "./index.cjs",
-      "default": "./index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
     },
     "./*": {
-      "import": "./*.mjs",
-      "require": "./*.cjs",
-      "default": "./*.mjs"
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.cjs",
+      "default": "./dist/*.mjs"
     }
   },
   "engines": {
