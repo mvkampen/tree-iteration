@@ -23,18 +23,6 @@
     "build": "node esbuild.config.js && tsc",
     "clean": "rm -rf ./dist"
   },
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.mjs"
-    },
-    "./*": {
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.cjs",
-      "default": "./dist/*.mjs"
-    }
-  },
   "engines": {
     "node": ">=12.13.0"
   },
