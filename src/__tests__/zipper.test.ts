@@ -48,9 +48,15 @@ describe('value', () => {
 })
 
 describe('goToFirstChild', () => {
-  it('move focus to last child of current node', () => {
+  it('move focus to first child of current node', () => {
     const move = Zipper.goToFirstChild(zip)
     if (move) expect(Zipper.value(move)).toEqual(2)
+    else fail()
+  })
+
+  it('can focus on empty child', () => {
+    const move = Zipper.goToFirstChild(Zipper.zipper(singleton(5)))
+    expect(move).toEqual(undefined)
   })
 })
 
@@ -58,6 +64,7 @@ describe('goToChild', () => {
   it('move focus node to child by index', () => {
     const move = Zipper.goToChild(1, zip)
     if (move) expect(Zipper.value(move)).toEqual(5)
+    else fail()
   })
 })
 
