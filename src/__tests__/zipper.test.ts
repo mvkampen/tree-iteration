@@ -1,6 +1,6 @@
-import { node, singleton } from '../node'
-import * as Zipper from '../zipper'
-import { type Zipper as Zip } from '../zipper'
+import { node, singleton } from '../node.js'
+import * as Zipper from '../zipper.js'
+import { type Zipper as Zip } from '../zipper.js'
 
 const tree = node(1, [
   node(2, [ singleton(3), singleton(4) ]),

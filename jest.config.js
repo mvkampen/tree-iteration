@@ -3,6 +3,9 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleFileExtensions: [ 'ts', 'js' ],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1'
+  },
   transform: {
     '^.+\\.(ts)$': ['ts-jest', {
       babel: true,

@@ -1,4 +1,4 @@
-import { type Node } from './node';
+import { type Node } from './node.js';
 export type Context<T> = {
     readonly focus: T;
     readonly left: Array<Node<T>>;

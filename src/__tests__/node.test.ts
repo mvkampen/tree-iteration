@@ -1,4 +1,4 @@
-import * as Node from '../node'
+import * as Node from '../node.js'
 
 const tree = Node.node(1, [
   Node.node(2, [ Node.singleton(3), Node.singleton(4) ]),
