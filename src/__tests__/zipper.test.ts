@@ -76,7 +76,7 @@ describe('goRight', () => {
       if (right) {
         expect(Zipper.value(right)).toEqual(6)
         const end = Zipper.goRight(right)
-        expect(end).toBeUndefined
+        expect(end).toBeUndefined()
       }
       else fail()
     } else fail()
@@ -91,7 +91,7 @@ describe('goLeft', () => {
       if (left) {
         expect(Zipper.value(left)).toEqual(2)
         const end = Zipper.goLeft(left)
-        expect(end).toBeUndefined
+        expect(end).toBeUndefined()
       }
       else fail()
     } else fail()

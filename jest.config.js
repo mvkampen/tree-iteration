@@ -1,14 +1,15 @@
 export default {
   verbose: true,
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
+  extensionsToTreatAsEsm: [ '.ts' ],
   moduleFileExtensions: [ 'ts', 'js' ],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1'
   },
   transform: {
     '^.+\\.(ts)$': ['ts-jest', {
-      babel: true,
+      useESM: true,
       tsconfig: 'tsconfig.json'
     }]
   },

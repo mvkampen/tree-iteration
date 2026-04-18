@@ -9,10 +9,11 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "experimentalDecorators": true,
     "strict": true,
     "skipLibCheck": true,
+    "rootDir": "src",
     "outDir": "dist",
     "lib": ["ES2022"]
   },
