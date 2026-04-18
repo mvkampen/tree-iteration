@@ -46,7 +46,7 @@
     "clean": "rm -rf ./dist"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
