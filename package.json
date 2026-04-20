@@ -40,7 +40,7 @@
     "tests": "tests"
   },
   "scripts": {
-    "lint": "eslint",
+    "lint": "eslint src eslint.config.js esbuild.config.js jest.config.js",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "build": "npm run clean && node esbuild.config.js && tsc",
     "clean": "rm -rf ./dist"
