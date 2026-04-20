@@ -139,14 +139,12 @@ describe('prepend', () => {
     const child = Zipper.goToFirstChild(zip)
     if (child) {
       const added = Zipper.prepend(singleton(12), child)
-      if (added) {
-        // keeps focus
-        expect(Zipper.value(added)).toEqual(2)
-        const left = Zipper.goLeft(added)
-        // added left, even if focus was firstChild
-        if (left) expect(Zipper.value(left)).toEqual(12)
-        else fail()
-      } else fail()
+      // keeps focus
+      expect(Zipper.value(added)).toEqual(2)
+      const left = Zipper.goLeft(added)
+      // added left, even if focus was firstChild
+      if (left) expect(Zipper.value(left)).toEqual(12)
+      else fail()
     } else fail()
   })
 })
@@ -156,14 +154,12 @@ describe('append', () => {
     const child = Zipper.goToLastChild(zip)
     if (child) {
       const added = Zipper.prepend(singleton(12), child)
-      if (added) {
-        // keeps focus
-        expect(Zipper.value(added)).toEqual(6)
-        const right = Zipper.goLeft(added)
-        // added right, even if focus was lastChild
-        if (right) expect(Zipper.value(right)).toEqual(12)
-        else fail()
-      } else fail()
+      // keeps focus
+      expect(Zipper.value(added)).toEqual(6)
+      const right = Zipper.goLeft(added)
+      // added right, even if focus was lastChild
+      if (right) expect(Zipper.value(right)).toEqual(12)
+      else fail()
     } else fail()
   })
 })
@@ -172,11 +168,32 @@ describe('findNext', () => {
   it ('walks till right most node', () => {
     const even = (v: number) => { return (v % 2) === 0 }
     const walked = Zipper.findNext(even, zip)
+
     if (walked) {
       expect(Zipper.value(walked)).toEqual(2)
+
       const next = Zipper.findNext(even, walked)
+
       // continues bfs from focus
       if (next) expect(Zipper.value(next)).toEqual(4)
+      else fail()
+    } else fail()
+  })
+})
+
+describe('findPrevious', () => {
+  it ('walks till left most node', () => {
+    const even = (v: number) => { return (v % 2) === 0 }
+    const start = Zipper.goToLastDecendant(zip)
+    expect(Zipper.value(start)).toEqual(10)
+
+    const walked = Zipper.findPrevious(even, start)
+    if (walked) {
+      expect(Zipper.value(walked)).toEqual(8)
+
+      const next = Zipper.findPrevious(even, walked)
+
+      if (next) expect(Zipper.value(next)).toEqual(6)
       else fail()
     } else fail()
   })
@@ -185,10 +202,7 @@ describe('findNext', () => {
 describe('goToLastDecendant', () => {
   it ('walk to furthest right child', () => {
     const move = Zipper.goToLastDecendant(zip)
-    if (move) {
-      expect(Zipper.value(move)).toEqual(10)
-    }
-    else fail()
+    expect(Zipper.value(move)).toEqual(10)
   })
 })
 
@@ -213,10 +227,8 @@ describe('remove', () => {
 
   it ('moves focus back up, without siblings', () => {
     const move = Zipper.goToLastDecendant(zip)
-    if (move) {
-      const removed = Zipper.remove(move)
-      if (removed) expect(Zipper.value(removed)).toEqual(7)
-      else fail()
-    } else fail()
+    const removed = Zipper.remove(move)
+    if (removed) expect(Zipper.value(removed)).toEqual(7)
+    else fail()
   })
 })
