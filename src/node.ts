@@ -56,7 +56,7 @@ export function foldl<T, U> (
   return foldStep(fn, acc, [seed], [])
 }
 
-export function foldStep<T, U> (
+function foldStep<T, U> (
   fn: (value: T, acc: U) => U,
   acc: U,
   nodes: Array<Node<T>>,
